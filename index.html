@@ -384,7 +384,7 @@ function removeCustomPerson(name) {
 }
 
 // ── Dependents ────────────────────────────────────────────────────────────────
-function refreshDependents() { renderPayer(); renderSplitArea(); lockSplitHeight(); }
+function refreshDependents() { renderPayer(); renderSplitArea(); }
 
 function renderPayer() {
   const sel = document.getElementById('expPayer');
@@ -404,25 +404,8 @@ function setSplit(mode) {
   document.getElementById('splitEqualArea').style.display = mode==='equal'?'flex':'none';
   document.getElementById('splitCustomArea').style.display = mode==='custom'?'block':'none';
   renderSplitArea();
-  lockSplitHeight();
 }
 
-function lockSplitHeight() {
-  const area = document.getElementById('splitArea');
-  // Remove lock temporarily to measure natural height
-  area.style.minHeight = '';
-  const eqEl = document.getElementById('splitEqualArea');
-  const cuEl = document.getElementById('splitCustomArea');
-  // Show both, measure, then restore
-  const prevEq = eqEl.style.display;
-  const prevCu = cuEl.style.display;
-  eqEl.style.display = 'flex';
-  cuEl.style.display = 'block';
-  const h = Math.max(eqEl.offsetHeight, cuEl.offsetHeight);
-  eqEl.style.display = prevEq;
-  cuEl.style.display = prevCu;
-  if (h > 0) area.style.minHeight = h + 'px';
-}
 
 function renderSplitArea() {
   const ap = activePeople();
